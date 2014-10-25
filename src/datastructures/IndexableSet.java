@@ -27,14 +27,13 @@ public class IndexableSet<E> extends AbstractSet<E>
     private final Map<E, Integer> indices;
     private transient int modCount;
     
-    /** Creates an empty {@code IndexableSet} with an initial capacity of 8.*/
+    /** Creates an empty set with an initial capacity of 8.*/
     public IndexableSet() {
         this(8);
     }
     
     /**
-     * Creates an empty {@code IndexableSet} with the specified initial
-     * capacity.
+     * Creates an empty set with the specified initial capacity.
      *
      * @param  initialCapacity the initial capacity of the set
      * @throws IllegalArgumentException if the specified capacity is negative

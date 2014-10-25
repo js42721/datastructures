@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * A priority queue/map hybrid backed by a d-ary heap. Allows for duplicate
  * values but not keys. Supports O(1) find-min, O(lg n) insert, O(lg n) delete
- * (for any element), O(lg n) update (supported through the {@code put} method),
+ * (for any element), O(lg n) update (performed by the {@link #put} method),
  * and O(1) lookup by key.
  * 
  * @param <K> the key type
@@ -218,9 +218,7 @@ public class DHeapPriorityMap<K, V> {
         return deleted.value;
     }
 
-    /**
-     * Empties the map.
-     */
+    /** Empties the map. */
     public void clear() {
         for (int i = 0; i < size; ++i) {
             array[i] = null;
