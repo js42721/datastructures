@@ -1,7 +1,7 @@
 Data Structures
 ===============
 
-Some useful data structures not found in the standard library:
+Some useful data structures not found in Java's standard library:
 
 * [Bounded circular queue](src/datastructures/CircularQueue.java)
 * [Indexable set](src/datastructures/IndexableSet.java)
