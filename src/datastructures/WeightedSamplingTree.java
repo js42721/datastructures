@@ -12,11 +12,11 @@ import java.util.Random;
  * @param <E> the element type
  */
 public class WeightedSamplingTree<E> {
-    private static final boolean RED = false;
+    private static final boolean RED   = false;
     private static final boolean BLACK = true;
 
     private final Comparator<? super E> comparator;
-    private final Random rand;
+    private final Random rnd;
     private final Node<E> nil;
     private Node<E> root;
     private int size;
@@ -37,7 +37,7 @@ public class WeightedSamplingTree<E> {
      */
     public WeightedSamplingTree(Comparator<? super E> comparator) {
         this.comparator = comparator;
-        rand = new Random();
+        rnd = new Random();
         root = nil = new Node<E>(null);
         nil.left = nil.right = nil;
     }
@@ -252,7 +252,7 @@ public class WeightedSamplingTree<E> {
         if (x.subtreeWeight == 0L) {
             return nil;
         }
-        long r = (long)(rand.nextDouble() * x.subtreeWeight);
+        long r = (long)(rnd.nextDouble() * x.subtreeWeight);
         while (x != nil) {
             if (r >= x.left.subtreeWeight + x.right.subtreeWeight) {
                 return x;
