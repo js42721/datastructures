@@ -28,15 +28,14 @@ public class DisjointSetForest {
         if (x < 0 || x >= forest.length) {
             throw new IndexOutOfBoundsException(String.valueOf(x));
         }
-        int root = forest[x];
-        int index = x;
-        while (root >= 0) {
-            index = root;
-            root = forest[root];
+        int root = x;
+        int current = forest[x];
+        while (current >= 0) {
+            root = current;
+            current = forest[current];
         }
-        root = index;
         /* Performs path compression. */
-        int current = x;
+        current = x;
         while (current != root) {
             int old = current;
             current = forest[current];
@@ -60,11 +59,11 @@ public class DisjointSetForest {
         /* The lower-ranking root gets attached to the higher-ranking one. */
         if (forest[yRoot] < forest[xRoot]) {
             forest[xRoot] = yRoot;
-        } else {
-            if (forest[xRoot] == forest[yRoot]) {
-                --forest[xRoot]; // Increases rank.
-            }
+        } else if (forest[yRoot] > forest[xRoot]) {
             forest[yRoot] = xRoot;
+        } else {
+            forest[yRoot] = xRoot;
+            --forest[xRoot]; // Increases rank.
         }
         return true;
     }
