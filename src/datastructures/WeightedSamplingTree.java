@@ -20,7 +20,7 @@ public class WeightedSamplingTree<E> {
     private final Node<E> nil;
     private Node<E> root;
     private int size;
-
+    
     /**
      * Constructs an empty tree. Elements will be ordered according to their
      * natural ordering.
@@ -83,7 +83,7 @@ public class WeightedSamplingTree<E> {
 
     /**
      * Inserts an element into the tree if it is not already present and assigns
-     * it a sampling weight of {@code 1L}.
+     * it a sampling weight of 1.
      * 
      * @param  e the element to be inserted
      * @return {@code true} if the tree changed as a result of the call
@@ -92,7 +92,7 @@ public class WeightedSamplingTree<E> {
      * @throws NullPointerException if the specified element is null
      */
     public boolean add(E e) {
-        return add(e, 1L);
+        return add(e, 1);
     }
 
     /**
@@ -108,11 +108,11 @@ public class WeightedSamplingTree<E> {
      * @throws IllegalArgumentException if the specified weight is negative
      */
     @SuppressWarnings("unchecked")
-    public boolean add(E e, long weight) {
+    public boolean add(E e, int weight) {
         if (e == null) {
             throw new NullPointerException();
         }
-        if (weight < 0L) {
+        if (weight < 0) {
             throw new IllegalArgumentException("Weight must be nonnegative");
         }
         int cmp = 0;
@@ -198,7 +198,7 @@ public class WeightedSamplingTree<E> {
      * being selected depends on its sampling weight.
      *  
      * @return an element in the tree or {@code null} if the tree is empty or
-     *         if each of its elements has a weight of {@code 0L}
+     *         if each of its elements has a weight of 0
      */
     public E sample() {
         return sample(root).element;
@@ -210,22 +210,22 @@ public class WeightedSamplingTree<E> {
      *  
      * @param  o the element whose weight is to be set
      * @param  weight the desired sampling weight for the element
-     * @return the previous weight of the element or {@code -1L} if the element
-     *         is not contained in the tree
+     * @return the previous weight of the element or -1 if the element is not
+     *         contained in the tree
      * @throws ClassCastException if the type of the specified element is
      *         incompatible with the tree
      * @throws NullPointerException if the specified element is null
      * @throws IllegalArgumentException if the specified weight is negative
      */
-    public long setWeight(Object o, long weight) {
-        if (weight < 0L) {
+    public int setWeight(Object o, int weight) {
+        if (weight < 0) {
             throw new IllegalArgumentException("Weight must be nonnegative");
         }
         Node<E> node = findNode(o);
         if (node == nil) {
-            return -1L;
+            return -1;
         }
-        long old = weightOf(node);
+        int old = weightOf(node);
         if (old != weight) {
             setWeight(node, weight);
         }
@@ -236,27 +236,28 @@ public class WeightedSamplingTree<E> {
      * Returns the sampling weight of the specified element.
      * 
      * @param  o the element whose sampling weight is to be retrieved
-     * @return the sampling weight of the element or {@code -1L} if the element
-     *         is not contained in the tree
+     * @return the sampling weight of the element or -1 if the element is not
+     *         contained in the tree
      * @throws ClassCastException if the type of the specified element is
      *         incompatible with the tree
      * @throws NullPointerException if the specified element is null
      */
-    public long getWeight(Object o) {
+    public int getWeight(Object o) {
         Node<E> node = findNode(o);
-        return node != nil ? weightOf(node) : -1L;
+        return node != nil ? weightOf(node) : -1;
     }
 
     /** Selects and returns a node based on probability. */
     private Node<E> sample(Node<E> x) {
-        if (x.subtreeWeight == 0L) {
+        if (x.subtreeWeight == 0) {
             return nil;
         }
         long r = (long)(rnd.nextDouble() * x.subtreeWeight);
         while (x != nil) {
             if (r >= x.left.subtreeWeight + x.right.subtreeWeight) {
                 return x;
-            } else if (r < x.left.subtreeWeight) {
+            }
+            if (r < x.left.subtreeWeight) {
                 x = x.left;
             } else {
                 r -= x.left.subtreeWeight;
@@ -267,8 +268,8 @@ public class WeightedSamplingTree<E> {
     }
 
     /** Returns the individual weight of a node. */
-    private long weightOf(Node<E> x) {
-        return x.subtreeWeight - x.left.subtreeWeight - x.right.subtreeWeight;
+    private int weightOf(Node<E> x) {
+        return (int)(x.subtreeWeight - x.left.subtreeWeight - x.right.subtreeWeight);
     }
 
     /** 
@@ -276,8 +277,8 @@ public class WeightedSamplingTree<E> {
      * height of a red-black tree is no more than 2lg(n + 1), this operation
      * runs in O(lg n) time.
      */
-    private void setWeight(Node<E> x, long weight) {
-        long difference = weight - weightOf(x);
+    private void setWeight(Node<E> x, int weight) {
+        int difference = weight - weightOf(x);
         while (x != nil) {
             x.subtreeWeight += difference;
             x = x.parent;
@@ -324,10 +325,10 @@ public class WeightedSamplingTree<E> {
         Node<E> x, y;
         if (z.left == nil || z.right == nil) {
             y = z;
-            setWeight(y, 0L); // Removes the deleted node's weight from the tree.
+            setWeight(y, 0); // Removes the deleted node's weight from the tree.
         } else {
             y = successor(z);
-            long weightY = weightOf(y);
+            int weightY = weightOf(y);
             Node<E> current = y;
             /* Fixes weights from the replacement up to the deleted node. */
             while (current != z) {
