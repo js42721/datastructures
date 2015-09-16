@@ -244,7 +244,7 @@ public class WeightedSamplingTree<E> {
      */
     public int getWeight(Object o) {
         Node<E> node = findNode(o);
-        return node != nil ? weightOf(node) : -1;
+        return (node == nil) ? -1 : weightOf(node);
     }
 
     /** Selects and returns a node based on probability. */
@@ -338,7 +338,7 @@ public class WeightedSamplingTree<E> {
             z.element = y.element;
             setWeight(z, weightY); // Fixes the weight of the replacement.
         }
-        x = y.left != nil ? y.left : y.right;
+        x = (y.left != nil) ? y.left : y.right;
         x.parent = y.parent;
         if (y.parent == nil) {
             root = x;

@@ -76,7 +76,7 @@ public class DHeapPriorityMap<K, V> {
         }
         this.d = d;
         this.comparator = comparator;
-        array = new Entry[capacity > 0 ? capacity : 1];
+        array = new Entry[Math.max(capacity, 1)];
         indices = new HashMap<K, Integer>(capacity);
     }
 
@@ -106,7 +106,7 @@ public class DHeapPriorityMap<K, V> {
      *         null}) or {@code null} if the map is empty
      */
     public K peekKey() {
-        return size == 0 ? null : array[0].key;
+        return (size == 0) ? null : array[0].key;
     }
 
     /**
@@ -117,7 +117,7 @@ public class DHeapPriorityMap<K, V> {
      *         if the map is empty
      */
     public V peekValue() {
-        return size == 0 ? null : array[0].value;
+        return (size == 0) ? null : array[0].value;
     }
 
     /**
@@ -129,7 +129,7 @@ public class DHeapPriorityMap<K, V> {
      */
     public V get(Object key) {
         Integer i = indices.get(key);
-        return i == null ? null : array[i].value;
+        return (i == null) ? null : array[i].value;
     }
 
     /**
@@ -154,7 +154,7 @@ public class DHeapPriorityMap<K, V> {
         }
         int last = size;
         if (++size > array.length) {
-            array = resizeArray(array, array.length * 2);
+            array = resizeArray(array, 2 * array.length);
         }
         array[last] = new Entry<K, V>(key, value);
         siftUp(last);
