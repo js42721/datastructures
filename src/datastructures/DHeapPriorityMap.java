@@ -200,14 +200,14 @@ public class DHeapPriorityMap<K, V> {
          * in mind when implementing an iterator.
          */
         if (comparator != null) {
-            if (comparator.compare(array[i].value, array[parent(i)].value) < 0) {
+            if (comparator.compare(array[i].value, deleted.value) < 0) {
                 siftUpComparator(i);
             } else {
                 siftDownComparator(i);
             }
         } else {
             if (((Comparable<? super V>)array[i].value)
-                    .compareTo(array[parent(i)].value) < 0) {
+                    .compareTo(deleted.value) < 0) {
                 siftUp(i);
             } else {
                 siftDown(i);
