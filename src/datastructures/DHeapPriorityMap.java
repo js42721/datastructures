@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A priority queue/map hybrid backed by a d-ary heap. Allows for duplicate
- * values but not keys. Supports O(1) find-min, O(lg n) insert, O(lg n) delete
- * (for any element), O(lg n) update (performed by the {@link #put} method),
- * and O(1) lookup by key.
- * 
+ * A priority queue/map hybrid backed by a mutable d-ary heap. Supports O(1)
+ * find-min, O(lg n) insert, O(lg n) delete (for any element), O(lg n) update
+ * (performed by the {@link #put} method), and O(1) lookup by key.
+ *
  * @param <K> the key type
  * @param <V> the value type
  */
@@ -18,7 +17,7 @@ public class DHeapPriorityMap<K, V> {
     private static final int DEFAULT_CAPACITY = 8;
 
     private final Comparator<? super V> comparator;
-    private Map<K, Integer> indices;
+    private final Map<K, Integer> indices;
     private Entry<K, V>[] array;
     private final int d;
     private int size;

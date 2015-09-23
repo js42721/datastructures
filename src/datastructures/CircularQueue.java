@@ -1,11 +1,10 @@
 package datastructures;
 
 /**
- * An array-based bounded circular queue. This queue uses a sentinel value
- * (null) to check if the queue is empty or full when the head and tail are the
- * same. This is to avoid using an extra array slot or additional variables. Of
- * course, this also means that null elements cannot be inserted.
- *
+ * An array-based bounded circular queue. This implementation uses a sentinel
+ * value (null) to check whether the queue is empty or full when the head and
+ * tail indices point to the same element.
+ * 
  * @param <E> the element type
  */
 public class CircularQueue<E> {
@@ -119,7 +118,6 @@ public class CircularQueue<E> {
             throw new NullPointerException();
         }
         if (isFull()) {
-            /* Removes the front element. */
             head = (head + 1) % array.length;
         }
         array[tail] = e;
