@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * A red-black tree whose nodes are augmented with sampling weights. Supports
- * O(lg n) sampling and O(lg n) weight updates. Does not permit null elements.
+ * O(lg n) sampling and O(lg n) weight updates.
  * <p>
  * The red-black tree algorithms are based on those found in CLRS.
  * 

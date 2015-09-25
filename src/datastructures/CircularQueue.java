@@ -1,9 +1,10 @@
 package datastructures;
 
 /**
- * An array-based bounded circular queue. This implementation uses a sentinel
- * value (null) to check whether the queue is empty or full when the head and
- * tail indices point to the same element.
+ * A circular queue which removes the front element when the queue is full and
+ * a new element is added. This implementation uses a sentinel value (null) to
+ * determine whether the queue is empty or full when the head and tail indices
+ * point to the same element.
  * 
  * @param <E> the element type
  */
@@ -34,6 +35,15 @@ public class CircularQueue<E> {
     public boolean isEmpty() {
         return array[head] == null;
     }
+    
+    /**
+     * Returns {@code true} if the queue is at full capacity.
+     *  
+     * @return {@code true} if the queue is at full capacity
+     */
+    public boolean isAtFullCapacity() {
+        return array[head] != null && head == tail;
+    }
 
     /**
      * Returns the number of elements in the queue.
@@ -41,7 +51,7 @@ public class CircularQueue<E> {
      * @return the number of elements in the queue
      */
     public int size() {
-        if (isFull()) {
+        if (isAtFullCapacity()) {
             return array.length;
         }
         if (head > tail) {
@@ -78,9 +88,9 @@ public class CircularQueue<E> {
      */
     public E get(int index) {
         if (index < 0 || index >= size()) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException(String.valueOf(index));
         }
-        return array[(head + index) % array.length];
+        return array[translate(index)];
     }
 
     /**
@@ -97,9 +107,9 @@ public class CircularQueue<E> {
             throw new NullPointerException();
         }
         if (index < 0 || index >= size()) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException(String.valueOf(index));
         }
-        int i = (head + index) % array.length;
+        int i = translate(index);
         E old = array[i];
         array[i] = e;
         return old;
@@ -117,11 +127,11 @@ public class CircularQueue<E> {
         if (e == null) {
             throw new NullPointerException();
         }
-        if (isFull()) {
-            head = (head + 1) % array.length;
+        if (isAtFullCapacity()) {
+            head = increment(head);
         }
         array[tail] = e;
-        tail = (tail + 1) % array.length;
+        tail = increment(tail);
         return true;
     }
 
@@ -137,22 +147,25 @@ public class CircularQueue<E> {
         }
         E front = array[head];
         array[head] = null;
-        head = (head + 1) % array.length;
+        head = increment(head);
         return front;
     }
 
-    /**
-     * Removes all elements from the queue.
-     */
+    /** Removes all elements from the queue. */
     public void clear() {
         for (int i = 0; i < array.length; ++i) {
             array[i] = null;
         }
         head = tail = 0;
     }
+    
+    private int increment(int index) {
+        int next = index + 1;
+        return (next == array.length) ? 0 : next;
+    }
 
-    private boolean isFull() {
-        return array[head] != null && head == tail;
+    private int translate(int index) {
+        int res = head + index;
+        return (res >= array.length) ? res - array.length : res;
     }
 }
-
