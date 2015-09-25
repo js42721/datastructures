@@ -12,7 +12,7 @@ public class CircularQueue<E> {
     private final E[] array;
     private int head;
     private int tail;
-
+    
     /**
      * Constructs a bounded queue with the specified capacity.
      * 
@@ -42,7 +42,7 @@ public class CircularQueue<E> {
      * @return {@code true} if the queue is at full capacity
      */
     public boolean isAtFullCapacity() {
-        return array[head] != null && head == tail;
+        return head == tail && !isEmpty();
     }
 
     /**
