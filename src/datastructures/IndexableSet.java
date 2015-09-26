@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -21,10 +19,10 @@ import java.util.Set;
 public class IndexableSet<E> extends AbstractSet<E>
         implements Set<E>, Collection<E>, Serializable {
     
-    private static final long serialVersionUID = -7419448517916514052L;
+    private static final long serialVersionUID = 4873154254434468972L;
     
-    private final List<E> items;
-    private final Map<E, Integer> indices;
+    private final ArrayList<E> items;
+    private final HashMap<E, Integer> indices;
     private transient int modCount;
     
     /** Creates an empty set with an initial capacity of 8.*/
