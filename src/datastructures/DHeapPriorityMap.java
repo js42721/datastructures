@@ -75,7 +75,7 @@ public class DHeapPriorityMap<K, V> {
         }
         this.d = d;
         this.comparator = comparator;
-        array = new Entry[Math.max(capacity, 1)];
+        array = new Entry[capacity];
         indices = new HashMap<K, Integer>(capacity);
     }
 
@@ -151,12 +151,13 @@ public class DHeapPriorityMap<K, V> {
         if (old != null) {
             return old;
         }
-        int last = size;
-        if (++size > array.length) {
-            array = resizeArray(array, 2 * array.length);
+        int end = size;
+        if (end == array.length) {
+            grow(end + 1);
         }
-        array[last] = new Entry<K, V>(key, value);
-        siftUp(last);
+        ++size;
+        array[end] = new Entry<K, V>(key, value);
+        siftUp(end);
         return null;
     }
 
@@ -368,10 +369,18 @@ public class DHeapPriorityMap<K, V> {
     }
 
     @SuppressWarnings("unchecked")
-    private Entry<K, V>[] resizeArray(Entry<K, V>[] original, int newLength) {
-        Entry<K, V>[] copy = new Entry[newLength];
-        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
-        return copy;
+    private void grow(int minCapacity) {
+        if (minCapacity < 0) {
+            throw new OutOfMemoryError();
+        }
+        int oldCapacity = array.length;
+        int newCapacity = oldCapacity + oldCapacity / 2;
+        newCapacity = (newCapacity < 0) ?
+                      Integer.MAX_VALUE :
+                      Math.max(minCapacity, newCapacity);
+        Entry<K, V>[] resized = new Entry[newCapacity];
+        System.arraycopy(array, 0, resized, 0, oldCapacity);
+        array = resized;
     }
 
     private static class Entry<K, V> {

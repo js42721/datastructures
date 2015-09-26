@@ -12,7 +12,7 @@ public class CircularQueue<E> {
     private final E[] array;
     private int head;
     private int tail;
-    
+
     /**
      * Constructs a bounded queue with the specified capacity.
      * 
@@ -158,14 +158,15 @@ public class CircularQueue<E> {
         }
         head = tail = 0;
     }
-    
+
     private int increment(int index) {
-        int next = index + 1;
-        return (next == array.length) ? 0 : next;
+        int i = index + 1;
+        return (i == array.length) ? 0 : i;
     }
 
     private int translate(int index) {
-        int res = head + index;
-        return (res >= array.length) ? res - array.length : res;
+        int i = head + index;
+        int j = i - array.length; // Used to test for arithmetic overflow.
+        return (j >= 0) ? j : i;
     }
 }
