@@ -192,15 +192,16 @@ public class DHeapPriorityMap<K, V> {
         }
         int i = find; // Avoids additional unboxing.
         Entry<K, V> deleted = array[i];
-        array[i] = array[--size];
+        Entry<K, V> end = array[--size];
+        array[i] = end;
         if (comparator != null) {
-            if (comparator.compare(array[i].value, deleted.value) <= 0) {
+            if (comparator.compare(end.value, deleted.value) <= 0) {
                 siftUpComparator(i);
             } else {
                 siftDownComparator(i);
             }
         } else {
-            if (((Comparable<? super V>)array[i].value).compareTo(deleted.value) <= 0) {
+            if (((Comparable<? super V>)end.value).compareTo(deleted.value) <= 0) {
                 siftUp(i);
             } else {
                 siftDown(i);
@@ -232,9 +233,9 @@ public class DHeapPriorityMap<K, V> {
     @SuppressWarnings("unchecked")
     private int successor(int i) {
         int best = firstBranch(i);
+        V bestVal = array[best].value;
         int current = best + 1;
         int end = Math.min(size, best + d);
-        V bestVal = array[best].value;
         while (current < end) {
             V val = array[current].value;
             if (((Comparable<? super V>)val).compareTo(bestVal) < 0) {
@@ -249,9 +250,9 @@ public class DHeapPriorityMap<K, V> {
     /** Comparator version of successor. */
     private int successorComparator(int i) {
         int best = firstBranch(i);
+        V bestVal = array[best].value;
         int current = best + 1;
         int end = Math.min(size, best + d);
-        V bestVal = array[best].value;
         while (current < end) {
             V val = array[current].value;
             if (comparator.compare(val, bestVal) < 0) {
@@ -275,7 +276,7 @@ public class DHeapPriorityMap<K, V> {
                 break;
             }
             array[i] = p;
-            indices.put(array[i].key, i);
+            indices.put(p.key, i);
             i = parent;
         }
         array[i] = e;
@@ -292,7 +293,7 @@ public class DHeapPriorityMap<K, V> {
                 break;
             }
             array[i] = p;
-            indices.put(array[i].key, i);
+            indices.put(p.key, i);
             i = parent;
         }
         array[i] = e;
@@ -311,7 +312,7 @@ public class DHeapPriorityMap<K, V> {
                 break;
             }
             array[i] = s;
-            indices.put(array[i].key, i);
+            indices.put(s.key, i);
             i = successor;
         }
         array[i] = e;
@@ -328,7 +329,7 @@ public class DHeapPriorityMap<K, V> {
                 break;
             }
             array[i] = s;
-            indices.put(array[i].key, i);
+            indices.put(s.key, i);
             i = successor;
         }
         array[i] = e;
