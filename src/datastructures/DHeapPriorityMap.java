@@ -193,20 +193,15 @@ public class DHeapPriorityMap<K, V> {
         int i = find; // Avoids additional unboxing.
         Entry<K, V> deleted = array[i];
         array[i] = array[--size];
-        /* 
-         * The replacement element might move UP the array if it is not on
-         * the same path as the deleted element. This fact should be kept
-         * in mind when implementing an iterator.
-         */
         if (comparator != null) {
-            if (comparator.compare(array[i].value, deleted.value) < 0) {
+            if (comparator.compare(array[i].value, deleted.value) <= 0) {
                 siftUpComparator(i);
             } else {
                 siftDownComparator(i);
             }
         } else {
             if (((Comparable<? super V>)array[i].value)
-                    .compareTo(deleted.value) < 0) {
+                    .compareTo(deleted.value) <= 0) {
                 siftUp(i);
             } else {
                 siftDown(i);
@@ -240,9 +235,11 @@ public class DHeapPriorityMap<K, V> {
         int best = firstBranch(i);
         int current = best + 1;
         int end = Math.min(size, best + d);
+        V bestVal = array[best].value;
         while (current < end) {
-            if (((Comparable<? super V>)array[current].value)
-                    .compareTo(array[best].value) < 0) {
+            V val = array[current].value;
+            if (((Comparable<? super V>)val).compareTo(bestVal) < 0) {
+                bestVal = val;
                 best = current;
             }
             ++current;
@@ -255,8 +252,11 @@ public class DHeapPriorityMap<K, V> {
         int best = firstBranch(i);
         int current = best + 1;
         int end = Math.min(size, best + d);
+        V bestVal = array[best].value;
         while (current < end) {
-            if (comparator.compare(array[current].value, array[best].value) < 0) {
+            V val = array[current].value;
+            if (comparator.compare(val, bestVal) < 0) {
+                bestVal = val;
                 best = current;
             }
             ++current;
@@ -267,67 +267,73 @@ public class DHeapPriorityMap<K, V> {
     /** Moves an element up the heap while updating the index table. */
     @SuppressWarnings("unchecked")
     private void siftUp(int i) {
-        Entry<K, V> tmp = array[i];
-        int parent = parent(i);
-        Comparable<? super V> t = (Comparable<? super V>)tmp.value;
-        while (i > 0 && t.compareTo(array[parent].value) < 0) {
-            array[i] = array[parent];
+        Entry<K, V> e = array[i];
+        Comparable<? super V> val = (Comparable<? super V>)e.value;
+        while (i > 0) {
+            int parent = parent(i);
+            Entry<K, V> p = array[parent];
+            if (val.compareTo(p.value) >= 0) {
+                break;
+            }
+            array[i] = p;
             indices.put(array[i].key, i);
             i = parent;
-            parent = parent(i);
         }
-        array[i] = tmp;
-        indices.put(tmp.key, i);
+        array[i] = e;
+        indices.put(e.key, i);
     }
 
     /** Comparator version of siftUp. */
     private void siftUpComparator(int i) {
-        Entry<K, V> tmp = array[i];
-        int parent = parent(i);
-        while (i > 0 && comparator.compare(tmp.value, array[parent].value) < 0) {
-            array[i] = array[parent];
+        Entry<K, V> e = array[i];
+        while (i > 0) {
+            int parent = parent(i);
+            Entry<K, V> p = array[parent];
+            if (comparator.compare(e.value, p.value) >= 0) {
+                break;
+            }
+            array[i] = p;
             indices.put(array[i].key, i);
             i = parent;
-            parent = parent(i);
         }
-        array[i] = tmp;
-        indices.put(tmp.key, i);
+        array[i] = e;
+        indices.put(e.key, i);
     }    
 
     /** Moves an element down the heap while updating the index table. */
     @SuppressWarnings("unchecked")
     private void siftDown(int i) {
-        Entry<K, V> tmp = array[i];
-        int successor;
-        Comparable<? super V> t = (Comparable<? super V>)tmp.value;
+        Entry<K, V> e = array[i];
+        Comparable<? super V> val = (Comparable<? super V>)e.value;
         while (firstBranch(i) < size) {
-            successor = successor(i);
-            if (t.compareTo(array[successor].value) <= 0) {
+            int successor = successor(i);
+            Entry<K, V> s = array[successor];
+            if (val.compareTo(s.value) <= 0) {
                 break;
             }
-            array[i] = array[successor];
+            array[i] = s;
             indices.put(array[i].key, i);
             i = successor;
         }
-        array[i] = tmp;
-        indices.put(tmp.key, i);
+        array[i] = e;
+        indices.put(e.key, i);
     }
     
     /** Comparator version of siftDown. */
     private void siftDownComparator(int i) {
-        Entry<K, V> tmp = array[i];
-        int successor;
+        Entry<K, V> e = array[i];
         while (firstBranch(i) < size) {
-            successor = successorComparator(i);
-            if (comparator.compare(tmp.value, array[successor].value) <= 0) {
+            int successor = successorComparator(i);
+            Entry<K, V> s = array[successor];
+            if (comparator.compare(e.value, s.value) <= 0) {
                 break;
             }
-            array[i] = array[successor];
+            array[i] = s;
             indices.put(array[i].key, i);
             i = successor;
         }
-        array[i] = tmp;
-        indices.put(tmp.key, i);
+        array[i] = e;
+        indices.put(e.key, i);
     }
 
     /**
@@ -344,13 +350,13 @@ public class DHeapPriorityMap<K, V> {
         V old = array[i].value;
         array[i].value = value;
         if (comparator != null) {
-            if (comparator.compare(value, old) < 0) {
+            if (comparator.compare(value, old) <= 0) {
                 siftUpComparator(i);
             } else {
                 siftDownComparator(i);
             }
         } else {
-            if (((Comparable<? super V>)value).compareTo(old) < 0) {
+            if (((Comparable<? super V>)value).compareTo(old) <= 0) {
                 siftUp(i);
             } else {
                 siftDown(i);
@@ -373,7 +379,7 @@ public class DHeapPriorityMap<K, V> {
             throw new OutOfMemoryError();
         }
         int oldCapacity = array.length;
-        int newCapacity = oldCapacity + oldCapacity / 2;
+        int newCapacity = oldCapacity + (oldCapacity >>> 1);
         newCapacity = (newCapacity < 0) ?
                       Integer.MAX_VALUE :
                       Math.max(minCapacity, newCapacity);
