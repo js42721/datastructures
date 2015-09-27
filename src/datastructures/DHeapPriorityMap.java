@@ -200,8 +200,7 @@ public class DHeapPriorityMap<K, V> {
                 siftDownComparator(i);
             }
         } else {
-            if (((Comparable<? super V>)array[i].value)
-                    .compareTo(deleted.value) <= 0) {
+            if (((Comparable<? super V>)array[i].value).compareTo(deleted.value) <= 0) {
                 siftUp(i);
             } else {
                 siftDown(i);
