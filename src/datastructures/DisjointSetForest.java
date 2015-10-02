@@ -6,9 +6,9 @@ import java.util.Arrays;
 public class DisjointSetForest {
     private final int[] forest;
 
-    /** 
+    /**
      * Creates a disjoint set forest made up of n disjoint sets.
-     * 
+     *
      * @throws IllegalArgumentException if n is negative
      */
     public DisjointSetForest(int n) {
@@ -19,9 +19,9 @@ public class DisjointSetForest {
         Arrays.fill(forest, -1);
     }
 
-    /** 
+    /**
      * Returns the set representative of a given element.
-     * 
+     *
      * @throws IndexOutOfBoundsException if x is outside the range [0, n)
      */
     public int find(int x) {
@@ -44,9 +44,9 @@ public class DisjointSetForest {
         return root;
     }
 
-    /** 
+    /**
      * Merges the set containing x with the set containing y.
-     * 
+     *
      * @return false if x and y already belong to the same set
      * @throws IndexOutOfBoundsException if x or y is outside the range [0, n)
      */

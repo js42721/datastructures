@@ -5,7 +5,7 @@ package datastructures;
  * a new element is added. This implementation uses a sentinel value (null) to
  * determine whether the queue is empty or full when the head and tail indices
  * point to the same element.
- * 
+ *
  * @param <E> the element type
  */
 public class CircularQueue<E> {
@@ -14,8 +14,8 @@ public class CircularQueue<E> {
     private int tail;
 
     /**
-     * Constructs a bounded queue with the specified capacity.
-     * 
+     * Constructs a queue with the specified capacity.
+     *
      * @param  capacity the capacity of the queue
      * @throws IllegalArgumentException if capacity is 0 or less
      */
@@ -29,16 +29,16 @@ public class CircularQueue<E> {
 
     /**
      * Returns {@code true} if the queue contains no elements.
-     * 
+     *
      * @return {@code true} if the queue contains no elements
      */
     public boolean isEmpty() {
         return array[head] == null;
     }
-    
+
     /**
      * Returns {@code true} if the queue is at full capacity.
-     *  
+     *
      * @return {@code true} if the queue is at full capacity
      */
     public boolean isAtFullCapacity() {
@@ -47,7 +47,7 @@ public class CircularQueue<E> {
 
     /**
      * Returns the number of elements in the queue.
-     * 
+     *
      * @return the number of elements in the queue
      */
     public int size() {
@@ -62,7 +62,7 @@ public class CircularQueue<E> {
 
     /**
      * Returns the maximum number of elements that the queue can contain.
-     * 
+     *
      * @return the maximum number of elements that the queue can contain
      */
     public int capacity() {
@@ -71,7 +71,7 @@ public class CircularQueue<E> {
 
     /**
      * Returns the element at the front of the queue.
-     * 
+     *
      * @return the element at the front of the queue, or {@code null} if the
      *         queue is empty
      */
@@ -81,7 +81,7 @@ public class CircularQueue<E> {
 
     /**
      * Returns the element at the specified position.
-     * 
+     *
      * @param  index index of the element to return
      * @return the element at the specified position 
      * @throws IndexOutOfBoundsException if index is outside the range [0, size)
@@ -95,7 +95,7 @@ public class CircularQueue<E> {
 
     /**
      * Replaces the element at the specified position.
-     * 
+     *
      * @param  index index of the element to replace
      * @param  e the new element
      * @return the old element
@@ -118,7 +118,7 @@ public class CircularQueue<E> {
     /**
      * Inserts an element at the end of the queue. If the queue is full, the
      * element at the front of the queue will be removed.
-     * 
+     *
      * @param  e the element to be inserted
      * @return {@code true} (always)
      * @throws NullPointerException if the element is null
@@ -137,7 +137,7 @@ public class CircularQueue<E> {
 
     /**
      * Removes and returns the element at the front of the queue.
-     * 
+     *
      * @return the element at the front of the queue, or {@code null} if the
      *         queue is empty
      */

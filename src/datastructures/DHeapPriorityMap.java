@@ -34,7 +34,7 @@ public class DHeapPriorityMap<K, V> {
      * Constructs a map with the default initial capacity (8) and the default
      * fan-out for the underlying heap (4). Priority will be determined by the
      * supplied comparator.
-     * 
+     *
      * @param comparator the comparator which will be used to determine priority
      */
     public DHeapPriorityMap(Comparator<? super V> comparator) {
@@ -44,7 +44,7 @@ public class DHeapPriorityMap<K, V> {
     /**
      * Constructs a map with the specified initial capacity and heap fan-out.
      * Priority will be determined by the natural ordering of the map's values.
-     * 
+     *
      * @param  capacity the initial capacity of the map
      * @param  d the fan-out of the underlying heap
      * @throws IllegalArgumentException if capacity is less than 0 or if d is
@@ -80,7 +80,7 @@ public class DHeapPriorityMap<K, V> {
 
     /**
      * Returns {@code true} if the map contains no entries.
-     * 
+     *
      * @return {@code true} if the map contains no entries
      */
     public boolean isEmpty() {
@@ -89,7 +89,7 @@ public class DHeapPriorityMap<K, V> {
 
     /**
      * Returns the number of entries in the map.
-     * 
+     *
      * @return the number of entries in the map
      */
     public int size() {
@@ -99,7 +99,7 @@ public class DHeapPriorityMap<K, V> {
     /**
      * Returns the key of the entry with the highest priority (this is the entry
      * with the smallest value if a comparator is not provided).
-     * 
+     *
      * @return the key of the entry with the highest priority (could be {@code
      *         null}) or {@code null} if the map is empty
      */
@@ -110,7 +110,7 @@ public class DHeapPriorityMap<K, V> {
     /**
      * Returns the value of the entry with the highest priority (this is the
      * entry with the smallest value if a comparator is not provided).
-     * 
+     *
      * @return the value of the entry with the highest priority or {@code null}
      *         if the map is empty
      */
@@ -120,7 +120,7 @@ public class DHeapPriorityMap<K, V> {
 
     /**
      * Returns the value mapped to the specified key.
-     * 
+     *
      * @param  key the key whose value is to be returned
      * @return the value mapped to the key or {@code null} if the map does not
      *         contain the key
@@ -133,7 +133,7 @@ public class DHeapPriorityMap<K, V> {
     /**
      * Inserts a key along with its associated value. If the map already
      * contains the key, the old value is replaced.
-     * 
+     *
      * @param  key the key to be inserted
      * @param  value the value associated with the key
      * @return the value previously associated with the key or {@code null} if
@@ -162,7 +162,7 @@ public class DHeapPriorityMap<K, V> {
 
     /**
      * Removes the entry with the highest priority.
-     * 
+     *
      * @return {@code true} if the map changed as a result of the call
      */
     public boolean remove() {
@@ -179,7 +179,7 @@ public class DHeapPriorityMap<K, V> {
 
     /**
      * Removes the entry for the specified key.
-     * 
+     *
      * @param  key the key of the entry to be removed
      * @return the value which was mapped to the key or {@code null} if the map
      *         did not have an entry for the key
@@ -246,7 +246,7 @@ public class DHeapPriorityMap<K, V> {
         }
         return best;
     }
-    
+
     /** Comparator version of successor. */
     private int successorComparator(int i) {
         int best = firstBranch(i);
@@ -298,7 +298,7 @@ public class DHeapPriorityMap<K, V> {
         }
         array[i] = e;
         indices.put(e.key, i);
-    }    
+    }
 
     /** Moves an element down the heap while updating the index table. */
     @SuppressWarnings("unchecked")
@@ -318,7 +318,7 @@ public class DHeapPriorityMap<K, V> {
         array[i] = e;
         indices.put(e.key, i);
     }
-    
+
     /** Comparator version of siftDown. */
     private void siftDownComparator(int i) {
         Entry<K, V> e = array[i];
@@ -364,7 +364,7 @@ public class DHeapPriorityMap<K, V> {
         }
         return old;
     }
-    
+
     /** Turns an arbitrarily ordered array into a heap in O(n) time. */
     @SuppressWarnings("unused")
     private void heapify() {
@@ -379,7 +379,7 @@ public class DHeapPriorityMap<K, V> {
             throw new OutOfMemoryError();
         }
         int oldCapacity = array.length;
-        int newCapacity = oldCapacity + (oldCapacity >>> 1);
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
         newCapacity = (newCapacity < 0) ?
                       Integer.MAX_VALUE :
                       Math.max(minCapacity, newCapacity);

@@ -18,18 +18,18 @@ import java.util.Set;
  */
 public class IndexableSet<E> extends AbstractSet<E>
         implements Set<E>, Collection<E>, Serializable {
-    
+
     private static final long serialVersionUID = 4873154254434468972L;
-    
+
     private final ArrayList<E> items;
     private final HashMap<E, Integer> indices;
     private transient int modCount;
-    
+
     /** Creates an empty set with an initial capacity of 8.*/
     public IndexableSet() {
         this(8);
     }
-    
+
     /**
      * Creates an empty set with the specified initial capacity.
      *
@@ -40,10 +40,10 @@ public class IndexableSet<E> extends AbstractSet<E>
         items = new ArrayList<E>(initialCapacity);
         indices = new HashMap<E, Integer>(initialCapacity);
     }
-    
+
     /**
      * Returns the element at the specified index.
-     * 
+     *
      * @param  index the index of the element to return
      * @return the element at the specified index
      * @throws IndexOutOfBoundsException if the index is out of range
@@ -51,11 +51,11 @@ public class IndexableSet<E> extends AbstractSet<E>
     public E get(int index) {
         return items.get(index);
     }
-    
+
     /**
      * Removes the element at the specified index. The removed element will
      * be replaced with the last element unless it is already last.
-     * 
+     *
      * @param  index the index of the element to remove
      * @return the removed element
      * @throws IndexOutOfBoundsException if the index is out of range
@@ -76,12 +76,12 @@ public class IndexableSet<E> extends AbstractSet<E>
     public int size() {
         return items.size();
     }
-    
+
     @Override
     public boolean contains(Object o) {
         return indices.containsKey(o);
     }
-    
+
     @Override
     public boolean add(E e) {
         if (indices.containsKey(e)) {
@@ -101,7 +101,7 @@ public class IndexableSet<E> extends AbstractSet<E>
         removeAt(index);
         return true;
     }
-    
+
     @Override
     public void clear() {
         ++modCount;
@@ -113,12 +113,12 @@ public class IndexableSet<E> extends AbstractSet<E>
     public Iterator<E> iterator() {
         return new IndexableSetIterator();
     }
-    
+
     private class IndexableSetIterator implements Iterator<E> {
         int index;
         int lastReturned = -1;
         int expectedModCount = modCount;
-        
+
         @Override
         public boolean hasNext() {
             return index < size();

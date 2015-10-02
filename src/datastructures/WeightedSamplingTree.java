@@ -8,7 +8,7 @@ import java.util.Random;
  * O(lg n) sampling and O(lg n) weight updates.
  * <p>
  * The red-black tree algorithms are based on those found in CLRS.
- * 
+ *
  * @param <E> the element type
  */
 public class WeightedSamplingTree<E> {
@@ -20,7 +20,7 @@ public class WeightedSamplingTree<E> {
     private final Node<E> nil;
     private Node<E> root;
     private int size;
-    
+
     /**
      * Constructs an empty tree. Elements will be ordered according to their
      * natural ordering.
@@ -32,7 +32,7 @@ public class WeightedSamplingTree<E> {
     /**
      * Constructs an empty tree with a comparator. Elements will be ordered
      * according to the comparator.
-     * 
+     *
      * @param comparator the comparator which will be used to order elements
      */
     public WeightedSamplingTree(Comparator<? super E> comparator) {
@@ -40,11 +40,12 @@ public class WeightedSamplingTree<E> {
         rnd = new Random();
         root = nil = new Node<E>(null);
         nil.left = nil.right = nil;
+        nil.color = BLACK;
     }
 
     /**
      * Returns the number of elements contained in the tree.
-     * 
+     *
      * @return the number of elements contained in the tree
      */
     public int size() {
@@ -53,7 +54,7 @@ public class WeightedSamplingTree<E> {
 
     /**
      * Returns {@code true} if the tree contains no elements.
-     * 
+     *
      * @return {@code true} if the tree contains no elements
      */
     public boolean isEmpty() {
@@ -70,7 +71,7 @@ public class WeightedSamplingTree<E> {
 
     /**
      * Searches the tree for the specified element.
-     * 
+     *
      * @param  o the element to search for
      * @return {@code true} if the tree contains the element
      * @throws ClassCastException if the type of the specified element is
@@ -84,7 +85,7 @@ public class WeightedSamplingTree<E> {
     /**
      * Inserts an element into the tree if it is not already present and assigns
      * it a sampling weight of 1.
-     * 
+     *
      * @param  e the element to be inserted
      * @return {@code true} if the tree changed as a result of the call
      * @throws ClassCastException if the type of the specified element is
@@ -98,7 +99,7 @@ public class WeightedSamplingTree<E> {
     /**
      * Inserts an element into the tree and assigns it the specified nonnegative
      * sampling weight if the element is not already present.
-     * 
+     *
      * @param  e the element to be inserted
      * @param  weight the sampling weight of the element
      * @return {@code true} if the tree changed as a result of the call
@@ -129,7 +130,7 @@ public class WeightedSamplingTree<E> {
                     current.subtreeWeight += weight;
                     current = current.right;
                 } else {
-                    /* 
+                    /*
                      * The tree already contains the element so we undo the
                      * weight changes we made along the way.
                      */
@@ -149,7 +150,7 @@ public class WeightedSamplingTree<E> {
                     current.subtreeWeight += weight;
                     current = current.right;
                 } else {
-                    /* 
+                    /*
                      * The tree already contains the element so we undo the
                      * weight changes we made along the way.
                      */
@@ -177,7 +178,7 @@ public class WeightedSamplingTree<E> {
 
     /**
      * Removes the specified element from the tree.
-     * 
+     *
      * @param  o the element to be removed
      * @return {@code true} if the tree changed as a result of the call
      * @throws ClassCastException if the type of the specified element is
@@ -196,7 +197,7 @@ public class WeightedSamplingTree<E> {
     /**
      * Retrieves a sample from the tree. The probability of a particular element
      * being selected depends on its sampling weight.
-     *  
+     *
      * @return an element in the tree or {@code null} if the tree is empty or
      *         if each of its elements has a weight of 0
      */
@@ -207,7 +208,7 @@ public class WeightedSamplingTree<E> {
     /**
      * Sets the sampling weight of an element to the specified nonnegative
      * value.
-     *  
+     *
      * @param  o the element whose weight is to be set
      * @param  weight the desired sampling weight for the element
      * @return the previous weight of the element or -1 if the element is not
@@ -234,7 +235,7 @@ public class WeightedSamplingTree<E> {
 
     /**
      * Returns the sampling weight of the specified element.
-     * 
+     *
      * @param  o the element whose sampling weight is to be retrieved
      * @return the sampling weight of the element or -1 if the element is not
      *         contained in the tree
@@ -272,7 +273,7 @@ public class WeightedSamplingTree<E> {
         return (int)(x.subtreeWeight - x.left.subtreeWeight - x.right.subtreeWeight);
     }
 
-    /** 
+    /**
      * Sets the weight of a node and adjusts its ancestors' weights. Since the
      * height of a red-black tree is no more than 2lg(n + 1), this operation
      * runs in O(lg n) time.
@@ -524,7 +525,6 @@ public class WeightedSamplingTree<E> {
 
         Node(E element) {
             this.element = element;
-            color = BLACK;
         }
     }
 }
