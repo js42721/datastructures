@@ -254,10 +254,7 @@ public class WeightedSamplingTree<E> {
             return nil;
         }
         long r = (long)(rnd.nextDouble() * x.subtreeWeight);
-        while (x != nil) {
-            if (r >= x.left.subtreeWeight + x.right.subtreeWeight) {
-                return x;
-            }
+        while (r < x.left.subtreeWeight + x.right.subtreeWeight) {
             if (r < x.left.subtreeWeight) {
                 x = x.left;
             } else {
@@ -265,7 +262,7 @@ public class WeightedSamplingTree<E> {
                 x = x.right;
             }
         }
-        return nil;
+        return x;
     }
 
     /** Returns the individual weight of a node. */
@@ -323,7 +320,7 @@ public class WeightedSamplingTree<E> {
     /** Deletes a node and removes its weight. */
     private void deleteNode(Node<E> z) {
         --size;
-        Node<E> x, y;
+        Node<E> y;
         if (z.left == nil || z.right == nil) {
             y = z;
             setWeight(y, 0); // Removes the deleted node's weight from the tree.
@@ -339,7 +336,7 @@ public class WeightedSamplingTree<E> {
             z.element = y.element;
             setWeight(z, weightY); // Fixes the weight of the replacement.
         }
-        x = (y.left != nil) ? y.left : y.right;
+        Node<E> x = (y.left != nil) ? y.left : y.right;
         x.parent = y.parent;
         if (y.parent == nil) {
             root = x;
