@@ -53,8 +53,7 @@ public class IndexableSet<E> extends AbstractSet<E>
     }
 
     /**
-     * Removes the element at the specified index. The removed element will
-     * be replaced with the last element unless it is already last.
+     * Removes the element at the specified index.
      *
      * @param  index the index of the element to remove
      * @return the removed element
