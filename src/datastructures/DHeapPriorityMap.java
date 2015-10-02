@@ -169,10 +169,11 @@ public class DHeapPriorityMap<K, V> {
         if (size == 0) {
             return false;
         }
+        int end = --size;
         Entry<K, V> deleted = array[0];
-        array[0] = array[--size];
+        array[0] = array[end];
         siftDown(0);
-        array[size] = null;
+        array[end] = null;
         indices.remove(deleted.key);
         return true;
     }
@@ -191,23 +192,24 @@ public class DHeapPriorityMap<K, V> {
             return null;
         }
         int i = find; // Avoids additional unboxing.
+        int end = --size;
         Entry<K, V> deleted = array[i];
-        Entry<K, V> end = array[--size];
-        array[i] = end;
+        Entry<K, V> last = array[end];
+        array[i] = last;
         if (comparator != null) {
-            if (comparator.compare(end.value, deleted.value) <= 0) {
+            if (comparator.compare(last.value, deleted.value) <= 0) {
                 siftUpComparator(i);
             } else {
                 siftDownComparator(i);
             }
         } else {
-            if (((Comparable<? super V>)end.value).compareTo(deleted.value) <= 0) {
+            if (((Comparable<? super V>)last.value).compareTo(deleted.value) <= 0) {
                 siftUp(i);
             } else {
                 siftDown(i);
             }
         }
-        array[size] = null;
+        array[end] = null;
         indices.remove(deleted.key);
         return deleted.value;
     }
@@ -342,7 +344,7 @@ public class DHeapPriorityMap<K, V> {
      */
     @SuppressWarnings("unchecked")
     private V update(K key, V value) {
-        Integer find = indices.remove(key);
+        Integer find = indices.get(key);
         if (find == null) {
             return null;
         }
