@@ -172,7 +172,7 @@ public class DHeapPriorityMap<K, V> {
         if (size == 0) {
             return false;
         }
-        Entry<K, V> deleted = array[0];
+        K deletedKey = array[0].key;
         int end = --size;
         if (comparator != null) {
             siftDownComparator(0, array[end]);
@@ -180,7 +180,7 @@ public class DHeapPriorityMap<K, V> {
             siftDown(0, array[end]);
         }
         array[end] = null;
-        indices.remove(deleted.key);
+        indices.remove(deletedKey);
         return true;
     }
 
