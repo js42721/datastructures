@@ -270,11 +270,7 @@ public class WeightedSamplingTree<E> {
         return (int)(x.subtreeWeight - x.left.subtreeWeight - x.right.subtreeWeight);
     }
 
-    /**
-     * Sets the weight of a node and adjusts its ancestors' weights. Since the
-     * height of a red-black tree is no more than 2lg(n + 1), this operation
-     * runs in O(lg n) time.
-     */
+    /** Sets the weight of a node and adjusts its ancestors' weights. */
     private void setWeight(Node<E> x, int weight) {
         int difference = weight - weightOf(x);
         while (x != nil) {
