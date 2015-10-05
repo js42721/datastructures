@@ -24,7 +24,7 @@ public class CircularQueue<E> {
         if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than 0");
         }
-        array = (E[])new Object[capacity];
+        array = (E[]) new Object[capacity];
     }
 
     /**

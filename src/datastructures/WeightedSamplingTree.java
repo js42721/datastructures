@@ -139,7 +139,7 @@ public class WeightedSamplingTree<E> {
                 }
             }
         } else {
-            Comparable<? super E> c = (Comparable<? super E>)e;
+            Comparable<? super E> c = (Comparable<? super E>) e;
             while (current != nil) {
                 parent = current;
                 cmp = c.compareTo(current.element);
@@ -253,7 +253,7 @@ public class WeightedSamplingTree<E> {
         if (x.subtreeWeight == 0) {
             return nil;
         }
-        long r = (long)(rnd.nextDouble() * x.subtreeWeight);
+        long r = (long) (rnd.nextDouble() * x.subtreeWeight);
         while (r < x.left.subtreeWeight + x.right.subtreeWeight) {
             if (r < x.left.subtreeWeight) {
                 x = x.left;
@@ -267,7 +267,7 @@ public class WeightedSamplingTree<E> {
 
     /** Returns the individual weight of a node. */
     private int weightOf(Node<E> x) {
-        return (int)(x.subtreeWeight - x.left.subtreeWeight - x.right.subtreeWeight);
+        return (int) (x.subtreeWeight - x.left.subtreeWeight - x.right.subtreeWeight);
     }
 
     /** Sets the weight of a node and adjusts its ancestors' weights. */
@@ -286,7 +286,7 @@ public class WeightedSamplingTree<E> {
         }
         Node<E> current = root;
         if (comparator != null) {
-            E e = (E)o;
+            E e = (E) o;
             while (current != nil) {
                 int cmp = comparator.compare(e, current.element);
                 if (cmp < 0) {
@@ -298,7 +298,7 @@ public class WeightedSamplingTree<E> {
                 }
             }
         } else {
-            Comparable<? super E> c = (Comparable<? super E>)o;
+            Comparable<? super E> c = (Comparable<? super E>) o;
             while (current != nil) {
                 int cmp = c.compareTo(current.element);
                 if (cmp < 0) {
@@ -461,8 +461,7 @@ public class WeightedSamplingTree<E> {
                     rotateLeft(x.parent);
                     w = x.parent.right;
                 }
-                if (w.left.color == BLACK
-                        && w.right.color == BLACK) {
+                if (w.left.color == BLACK && w.right.color == BLACK) {
                     w.color = RED;
                     x = x.parent;
                 } else {
@@ -486,8 +485,7 @@ public class WeightedSamplingTree<E> {
                     rotateRight(x.parent);
                     w = x.parent.left;
                 }
-                if (w.right.color == BLACK
-                        && w.left.color == BLACK) {
+                if (w.right.color == BLACK && w.left.color == BLACK) {
                     w.color = RED;
                     x = x.parent;
                 } else {

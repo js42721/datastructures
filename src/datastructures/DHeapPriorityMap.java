@@ -47,8 +47,8 @@ public class DHeapPriorityMap<K, V> {
      *
      * @param  capacity the initial capacity of the map
      * @param  d the fan-out of the underlying heap
-     * @throws IllegalArgumentException if capacity is less than 0 or if d is
-     *         less than 2
+     * @throws IllegalArgumentException if capacity is negative or if d is less
+     *         than 2
      */
     public DHeapPriorityMap(int capacity, int d) {
         this(capacity, d, null);
@@ -61,13 +61,13 @@ public class DHeapPriorityMap<K, V> {
      * @param  capacity the initial capacity of the map
      * @param  d the fan-out of the underlying heap
      * @param  comparator the comparator which will be used to determine priority
-     * @throws IllegalArgumentException if capacity is less than 0 or if d is
-     *         less than 2
+     * @throws IllegalArgumentException if capacity is negative or if d is less
+     *         than 2
      */
     @SuppressWarnings("unchecked")
     public DHeapPriorityMap(int capacity, int d, Comparator<? super V> comparator) {
         if (capacity < 0) {
-            throw new IllegalArgumentException("Capacity must not be less than 0");
+            throw new IllegalArgumentException("Capacity must not be negative");
         }
         if (d < 2) {
             throw new IllegalArgumentException("Value of d must be 2 or greater");
@@ -208,7 +208,7 @@ public class DHeapPriorityMap<K, V> {
                 siftDownComparator(i, last);
             }
         } else {
-            if (((Comparable<? super V>)last.value).compareTo(deleted.value) <= 0) {
+            if (((Comparable<? super V>) last.value).compareTo(deleted.value) <= 0) {
                 siftUp(i, last);
             } else {
                 siftDown(i, last);
@@ -248,7 +248,7 @@ public class DHeapPriorityMap<K, V> {
         int current = best + 1;
         while (current < end) {
             V val = array[current].value;
-            if (((Comparable<? super V>)val).compareTo(bestVal) < 0) {
+            if (((Comparable<? super V>) val).compareTo(bestVal) < 0) {
                 bestVal = val;
                 best = current;
             }
@@ -280,7 +280,7 @@ public class DHeapPriorityMap<K, V> {
     /** Moves an element up the heap while updating the index table. */
     @SuppressWarnings("unchecked")
     private void siftUp(int i, Entry<K, V> e) {
-        Comparable<? super V> val = (Comparable<? super V>)e.value;
+        Comparable<? super V> val = (Comparable<? super V>) e.value;
         while (i > 0) {
             int parent = parent(i);
             Entry<K, V> p = array[parent];
@@ -315,7 +315,7 @@ public class DHeapPriorityMap<K, V> {
     @SuppressWarnings("unchecked")
     private void siftDown(int i, Entry<K, V> e) {
         if (size > 1) {
-            Comparable<? super V> val = (Comparable<? super V>)e.value;
+            Comparable<? super V> val = (Comparable<? super V>) e.value;
             int limit = parent(size - 1);
             while (i <= limit) {
                 int successor = successor(i);
@@ -380,7 +380,7 @@ public class DHeapPriorityMap<K, V> {
                 siftDownComparator(i, e);
             }
         } else {
-            if (((Comparable<? super V>)value).compareTo(old) <= 0) {
+            if (((Comparable<? super V>) value).compareTo(old) <= 0) {
                 siftUp(i, e);
             } else {
                 siftDown(i, e);
