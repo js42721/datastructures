@@ -1,7 +1,5 @@
 package datastructures;
 
-import java.util.Arrays;
-
 /** Allows for efficient union/find operations. */
 public class DisjointSetForest {
     private final int[] forest;
@@ -16,7 +14,9 @@ public class DisjointSetForest {
             throw new IllegalArgumentException("n must be nonnegative");
         }
         forest = new int[n];
-        Arrays.fill(forest, -1);
+        for (int i = 0; i < n; ++i) {
+            forest[i] = -1;
+        }
     }
 
     /**

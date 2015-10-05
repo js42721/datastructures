@@ -166,7 +166,7 @@ public class CircularQueue<E> {
 
     private int translate(int index) {
         int i = head + index;
-        int j = i - array.length; // Used to test for arithmetic overflow.
+        int j = i - array.length; // Handles overflow.
         return (j >= 0) ? j : i;
     }
 }
