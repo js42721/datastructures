@@ -400,7 +400,7 @@ public class DHeapPriorityMap<K, V> {
                       Integer.MAX_VALUE :
                       Math.max(minCapacity, newCapacity);
         Entry<K, V>[] resized = new Entry[newCapacity];
-        System.arraycopy(array, 0, resized, 0, oldCapacity);
+        System.arraycopy(array, 0, resized, 0, size);
         array = resized;
     }
 
