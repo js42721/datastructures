@@ -114,7 +114,7 @@ public class WeightedSamplingTree<E> {
             throw new NullPointerException();
         }
         if (weight < 0) {
-            throw new IllegalArgumentException("Weight must be nonnegative");
+            throw new IllegalArgumentException("Weight must not be negative");
         }
         int cmp = 0;
         Node<E> parent = nil;
@@ -220,7 +220,7 @@ public class WeightedSamplingTree<E> {
      */
     public int setWeight(Object o, int weight) {
         if (weight < 0) {
-            throw new IllegalArgumentException("Weight must be nonnegative");
+            throw new IllegalArgumentException("Weight must not be negative");
         }
         Node<E> node = findNode(o);
         if (node == nil) {
