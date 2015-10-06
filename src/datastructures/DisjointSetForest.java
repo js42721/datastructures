@@ -11,7 +11,7 @@ public class DisjointSetForest {
      */
     public DisjointSetForest(int n) {
         if (n < 0) {
-            throw new IllegalArgumentException("n must be nonnegative");
+            throw new IllegalArgumentException("n must not be negative");
         }
         forest = new int[n];
         for (int i = 0; i < n; ++i) {
