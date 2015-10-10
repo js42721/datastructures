@@ -359,6 +359,14 @@ public class DHeapPriorityMap<K, V> {
         }
     }
 
+    /** Comparator version of heapify. */
+    @SuppressWarnings("unused")
+    private void heapifyComparator() {
+        for (int i = parent(size - 1); i >= 0; --i) {
+            siftDownComparator(i, array[i]);
+        }
+    }
+
     /**
      * Updates the value mapped to the specified key and fixes the heap if
      * necessary. Returns the old value or, if the key is not present, null.

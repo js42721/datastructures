@@ -51,19 +51,21 @@ public class DisjointSetForest {
      * @throws IndexOutOfBoundsException if x or y is outside the range [0, n)
      */
     public boolean union(int x, int y) {
-        int xRoot = find(x);
-        int yRoot = find(y);
-        if (xRoot == yRoot) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX == rootY) {
             return false;
         }
+        int rankX = forest[rootX];
+        int rankY = forest[rootY];
         /* The lower-ranking root gets attached to the higher-ranking one. */
-        if (forest[yRoot] < forest[xRoot]) {
-            forest[xRoot] = yRoot;
-        } else if (forest[yRoot] > forest[xRoot]) {
-            forest[yRoot] = xRoot;
+        if (rankX > rankY) {
+            forest[rootX] = rootY;
         } else {
-            forest[yRoot] = xRoot;
-            --forest[xRoot]; // Increases rank.
+            if (rankX == rankY) {
+                --forest[rootX]; // Increases rank.
+            }
+            forest[rootY] = rootX;
         }
         return true;
     }
