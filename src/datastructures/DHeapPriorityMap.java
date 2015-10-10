@@ -245,14 +245,12 @@ public class DHeapPriorityMap<K, V> {
         if (end - size > 0) { // Overflow-safe equivalent of (end > size).
             end = size;
         }
-        int current = best + 1;
-        while (current < end) {
-            V val = array[current].value;
+        for (int j = best + 1; j < end; ++j) {
+            V val = array[j].value;
             if (((Comparable<? super V>) val).compareTo(bestVal) < 0) {
+                best = j;
                 bestVal = val;
-                best = current;
             }
-            ++current;
         }
         return best;
     }
@@ -265,14 +263,12 @@ public class DHeapPriorityMap<K, V> {
         if (end - size > 0) { // Overflow-safe equivalent of (end > size).
             end = size;
         }
-        int current = best + 1;
-        while (current < end) {
-            V val = array[current].value;
+        for (int j = best + 1; j < end; ++j) {
+            V val = array[j].value;
             if (comparator.compare(val, bestVal) < 0) {
+                best = j;
                 bestVal = val;
-                best = current;
             }
-            ++current;
         }
         return best;
     }
