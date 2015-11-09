@@ -347,22 +347,6 @@ public class DHeapPriorityMap<K, V> {
         indices.put(e.key, i);
     }
 
-    /** Turns an arbitrarily ordered array into a heap in O(n) time. */
-    @SuppressWarnings("unused")
-    private void heapify() {
-        for (int i = parent(size - 1); i >= 0; --i) {
-            siftDown(i, array[i]);
-        }
-    }
-
-    /** Comparator version of heapify. */
-    @SuppressWarnings("unused")
-    private void heapifyComparator() {
-        for (int i = parent(size - 1); i >= 0; --i) {
-            siftDownComparator(i, array[i]);
-        }
-    }
-
     /**
      * Updates the value mapped to the specified key and fixes the heap if
      * necessary. Returns the old value or, if the key is not present, null.
