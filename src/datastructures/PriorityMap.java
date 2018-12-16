@@ -252,7 +252,7 @@ public class PriorityMap<K, V> {
     @SuppressWarnings("unchecked")
     private void siftDown(int i, Entry<K, V> e) {
         Comparable<? super V> val = (Comparable<? super V>) e.value;
-        int limit = (size - 2) >> 1;
+        int limit = ((size - 1) - 1) >> 1;
         while (i <= limit) {
             int successor = (i << 1) + 1;
             Entry<K, V> s = array[successor];
@@ -277,7 +277,7 @@ public class PriorityMap<K, V> {
 
     /** Comparator version of siftDown. */
     private void siftDownComparator(int i, Entry<K, V> e) {
-        int limit = (size - 2) >> 1;
+        int limit = ((size - 1) - 1) >> 1;
         while (i <= limit) {
             int successor = (i << 1) + 1;
             Entry<K, V> s = array[successor];

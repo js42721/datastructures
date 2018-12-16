@@ -202,7 +202,7 @@ public class MinHeap {
     }
 
     private void siftDown(int h, int i, double val) {
-        int limit = (size - 2) >> 1;
+        int limit = ((size - 1) - 1) >> 1;
         while (h <= limit) {
             int successor = (h << 1) + 1;
             int s = htoi[successor];
