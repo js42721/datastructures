@@ -1,7 +1,7 @@
 Data Structures
 ===============
 
-Some useful data structures not found in Java's standard library:
+Contains several handy data structures written in Java:
 
 * [Circular queue](src/datastructures/CircularQueue.java)
 * [Disjoint set forest](src/datastructures/DisjointSetForest.java)
