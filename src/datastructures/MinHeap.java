@@ -11,9 +11,9 @@ public class MinHeap {
     int size;
 
     /**
-     * Creates a min-heap with a maximum capacity of n.
+     * Creates a min-heap with a capacity of n.
      *
-     * @param  n the maximum capacity
+     * @param  n the capacity
      * @throws IllegalArgumentException if n is negative
      */
     public MinHeap(int n) {
@@ -28,19 +28,20 @@ public class MinHeap {
         }
     }
 
-    /**
-     * Returns the number of values in the heap.
-     *
-     * @return the number of values in the heap
-     */
+    /** Returns the capacity of this heap. */
+    public int capacity() {
+        return a.length;
+    }
+
+    /** Returns the number of values in this heap. */
     public int size() {
         return size;
     }
 
     /**
-     * Returns true if the heap is empty.
+     * Checks if this heap is empty.
      *
-     * @return {@code true} if the heap is empty
+     * @return {@code true} if this heap is empty
      */
     public boolean isEmpty() {
         return size == 0;
@@ -70,7 +71,7 @@ public class MinHeap {
      *
      * @param  i the index
      * @return {@code true} if the heap contains a value for i
-     * @throws IndexOutOfBoundsException if i is outside [0, n)
+     * @throws IndexOutOfBoundsException if i is outside [0, capacity)
      */
     public boolean contains(int i) {
         if (i < 0 || i >= itoh.length) {
@@ -84,7 +85,7 @@ public class MinHeap {
      *
      * @param  i the index
      * @return the value associated with i or NaN if there is no such value
-     * @throws IndexOutOfBoundsException if i is outside [0, n)
+     * @throws IndexOutOfBoundsException if i is outside [0, capacity)
      */
     public double get(int i) {
         return contains(i) ? a[i] : Double.NaN;
@@ -97,7 +98,7 @@ public class MinHeap {
      * @param  i the index
      * @param  val the value
      * @return {@code true} if the heap does not already contain a value for i
-     * @throws IndexOutOfBoundsException if i is outside [0, n)
+     * @throws IndexOutOfBoundsException if i is outside [0, capacity)
      * @throws IllegalArgumentException if val is NaN
      */
     public boolean insert(int i, double val) {
@@ -134,7 +135,7 @@ public class MinHeap {
      *
      * @param  i the index
      * @return the value associated with i or NaN if there is no such value
-     * @throws IndexOutOfBoundsException if i is outside [0, n)
+     * @throws IndexOutOfBoundsException if i is outside [0, capacity)
      */
     public double delete(int i) {
         if (!contains(i)) {
@@ -158,7 +159,7 @@ public class MinHeap {
      * @param  i the index
      * @param  val the replacement value
      * @return the old value or NaN if there is no value associated with i
-     * @throws IndexOutOfBoundsException if i is outside [0, n)
+     * @throws IndexOutOfBoundsException if i is outside [0, capacity)
      * @throws IllegalArgumentException if val is NaN
      */
     public double update(int i, double val) {
