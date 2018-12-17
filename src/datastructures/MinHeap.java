@@ -50,7 +50,7 @@ public class MinHeap {
     /**
      * Returns the index associated with the minimum value.
      *
-     * @return the index associated with the minimum value or -1 if the heap
+     * @return the index associated with the minimum value or -1 if this heap
      *         is empty
      */
     public int peek() {
@@ -60,7 +60,7 @@ public class MinHeap {
     /**
      * Returns the minimum value.
      *
-     * @return the minimum value or NaN if the heap is empty
+     * @return the minimum value or NaN if this heap is empty
      */
     public double peekVal() {
         return (size == 0) ? Double.NaN : a[htoi[0]];
@@ -70,7 +70,7 @@ public class MinHeap {
      * Checks if the value associated with an index is present.
      *
      * @param  i the index
-     * @return {@code true} if the heap contains a value for i
+     * @return {@code true} if this heap contains a value for i
      * @throws IndexOutOfBoundsException if i is outside [0, capacity)
      */
     public boolean contains(int i) {
@@ -97,7 +97,7 @@ public class MinHeap {
      *
      * @param  i the index
      * @param  val the value
-     * @return {@code true} if the heap does not already contain a value for i
+     * @return {@code true} if this heap does not already contain a value for i
      * @throws IndexOutOfBoundsException if i is outside [0, capacity)
      * @throws IllegalArgumentException if val is NaN
      */
@@ -116,7 +116,7 @@ public class MinHeap {
     /**
      * Removes the minimum value.
      *
-     * @return the index associated with the minimum value or -1 if the heap
+     * @return the index associated with the minimum value or -1 if this heap
      *         is empty
      */
     public int delete() {
@@ -179,7 +179,7 @@ public class MinHeap {
         return old;
     }
 
-    /** Empties the heap. */
+    /** Empties this heap. */
     public void clear() {
         for (int i = 0; i < itoh.length; ++i) {
             itoh[i] = -1;
